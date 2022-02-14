@@ -40,7 +40,7 @@ runs:
     - "-tgtoken"
     - ${{ inputs.TELEGRAM_TOKEN }}
     - "-withstared"
-    - ${{ inputs.STATS_FILE_PATH }}
+    - ${{ inputs.WITH_STARED }}
     - "-filepath"
     - ${{ inputs.STATS_FILE_PATH }}
 

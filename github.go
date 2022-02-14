@@ -355,7 +355,7 @@ func main() {
 	myPrString := makeContributedString(myPRs, totalPrCount)
 
 	statsResultFile := path.Join(os.Getenv("GITHUB_WORKSPACE"), filePath)
-	readMeContent, err := ioutil.ReadFile(statsResultFile)
+	fileContent, err := ioutil.ReadFile(statsResultFile)
 	if err != nil {
 		panic(err)
 	}
@@ -364,7 +364,7 @@ func main() {
 	if withStared {
 		newContentString = newContentString + myStaredString
 	}
-	newContent := []byte(re.ReplaceAllString(string(readMeContent), `$1`+"\n"+newContentString+`$3`))
+	newContent := []byte(re.ReplaceAllString(string(fileContent), `$1`+"\n"+newContentString+`$3`))
 	err = ioutil.WriteFile(statsResultFile, newContent, 0644)
 	if err != nil {
 		panic(err)

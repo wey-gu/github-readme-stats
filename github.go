@@ -25,6 +25,7 @@ var (
 	telegramToken  string
 	staredNumber   int
 	withStared     bool
+	filePath       string
 )
 
 var baseURL = "https://github.com/"
@@ -38,6 +39,7 @@ func init() {
 	flag.StringVar(&telegramToken, "tgtoken", "", "token from telegram")
 	flag.StringVar(&githubUserName, "username", "", "github user name")
 	flag.BoolVar(&withStared, "withstared", true, "if with stared repos")
+	flag.StringVar(&filePath, "filepath", "README.md", "file path")
 }
 
 type myRepoInfo struct {
@@ -352,8 +354,8 @@ func main() {
 	myCreatedString := makeCreatedString(myRepos, totalStarsCount)
 	myPrString := makeContributedString(myPRs, totalPrCount)
 
-	readMeFile := path.Join(os.Getenv("GITHUB_WORKSPACE"), "README.md")
-	readMeContent, err := ioutil.ReadFile(readMeFile)
+	statsResultFile := path.Join(os.Getenv("GITHUB_WORKSPACE"), filePath)
+	readMeContent, err := ioutil.ReadFile(statsResultFile)
 	if err != nil {
 		panic(err)
 	}
@@ -363,7 +365,7 @@ func main() {
 		newContentString = newContentString + myStaredString
 	}
 	newContent := []byte(re.ReplaceAllString(string(readMeContent), `$1`+"\n"+newContentString+`$3`))
-	err = ioutil.WriteFile(readMeFile, newContent, 0644)
+	err = ioutil.WriteFile(statsResultFile, newContent, 0644)
 	if err != nil {
 		panic(err)
 	}

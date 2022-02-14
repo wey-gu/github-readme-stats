@@ -22,6 +22,10 @@ inputs:
     description: "If with stared repos"
     default: true
     required: false
+  STATS_FILE_PATH:
+    description: "The target file to render stats to"
+    default: "README.md"
+    required: false
 
 runs:
   using: "docker"
@@ -36,7 +40,9 @@ runs:
     - "-tgtoken"
     - ${{ inputs.TELEGRAM_TOKEN }}
     - "-withstared"
-    - ${{ inputs.WITH_STARED }}
+    - ${{ inputs.STATS_FILE_PATH }}
+    - "-filepath"
+    - ${{ inputs.STATS_FILE_PATH }}
 
 branding:
   icon: github
